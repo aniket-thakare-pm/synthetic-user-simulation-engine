@@ -1,0 +1,29 @@
+name: Scheduled Daily Activity Sync
+
+on:
+  schedule:
+    # Runs twice daily (4:00 AM UTC & 2:00 PM UTC)
+    - cron: '0 4,14 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI anytime
+
+permissions:
+  contents: write
+
+jobs:
+  scheduled-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update Activity Log
+        run: |
+          echo "Sync Log: $(date -u) - Scheduled System Health Sync" >> activity.log
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "aniket-thakare-pm"
+          git config --global user.email "aniket-thakare-pm@users.noreply.github.com"
+          git add activity.log
+          git commit -m "docs: scheduled documentation and activity sync [automated]"
+          git push
