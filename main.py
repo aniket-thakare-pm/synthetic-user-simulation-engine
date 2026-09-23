@@ -24,7 +24,7 @@ def main():
     
     active_panel = SAMPLE_PERSONAS
     product_context = "General B2B / Consumer Software"
-    session_history = []  # Tracks Q&A transcript for transcript-aware Zooming
+    session_history = []
     
     if choice == "2":
         domain = input("\nEnter your target Domain / Product Category (e.g., 'Pet Health Tech', 'Meesho Creator Program'): ").strip()
@@ -69,18 +69,23 @@ def main():
                     
                 default_selection = [1, 2] if len(active_panel) >= 2 else [1]
                 default_str = ", ".join(map(str, default_selection))
+                suggested_names = ", ".join([f"{i}. {active_panel[i-1].name}" for i in default_selection])
                 
-                sel_input = input(f"\nEnter persona numbers to zoom into (Press ENTER for default [{default_str}]): ").strip()
+                print(f"\n🤖 AI Auto-Suggested Zoom Targets (Highest Pain/Fit): [{suggested_names}]")
+                sel_input = input(f"Press ENTER to accept AI Auto-Suggestion [{default_str}], or enter custom numbers (e.g. 1 2 4 5 or [1, 2, 4, 5]): ").strip()
+                
+                # Sanitize input: remove brackets, commas, quotes
+                clean_input = sel_input.replace("[", "").replace("]", "").replace(",", " ").replace("'", "").replace('"', "").strip()
                 
                 selected_indices = default_selection
-                if sel_input:
+                if clean_input:
                     try:
-                        parsed = [int(x.strip()) for x in sel_input.replace(",", " ").split() if x.strip().isdigit()]
+                        parsed = [int(x) for x in clean_input.split() if x.isdigit()]
                         valid = [i for i in parsed if 1 <= i <= len(active_panel)]
                         if valid:
                             selected_indices = valid
                     except Exception:
-                        print("Invalid selection. Using default selection.")
+                        print("Invalid selection format. Using auto-suggested selection.")
                         
                 selected_personas = [active_panel[i - 1] for i in selected_indices]
                 selected_names = ", ".join([p.name for p in selected_personas])
@@ -112,7 +117,6 @@ def main():
             print(f" PANEL RESPONSES (N={len(active_panel)}) — PARALLEL EXECUTION ⚡")
             print("=" * 75)
             
-            # Execute all persona interviews concurrently in parallel (5x speedup!)
             from concurrent.futures import ThreadPoolExecutor
             
             def process_persona(persona):
