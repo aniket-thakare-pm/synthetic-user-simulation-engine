@@ -16,7 +16,7 @@ def get_available_gemini_models(api_key: str) -> list:
     url = f"https://generativelanguage.googleapis.com/v1beta/models?key={api_key}"
     req = urllib.request.Request(url, method="GET")
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             models = []
             for m in data.get("models", []):
@@ -33,7 +33,7 @@ def get_available_gemini_models(api_key: str) -> list:
 def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_name: str = None) -> Dict[str, Any]:
     """
     Calls the Gemini API directly via HTTP REST endpoint.
-    Includes exponential backoff retries and model fallback on 503/429 errors.
+    Includes exponential backoff retries and model fallback on 503/429/Timeout errors.
     """
     api_key = api_key.strip().strip("'").strip('"')
     available_models = get_available_gemini_models(api_key)
@@ -93,7 +93,8 @@ def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_
         for attempt in range(max_retries):
             req = urllib.request.Request(url, data=data, headers=headers, method="POST")
             try:
-                with urllib.request.urlopen(req) as resp:
+                # Set explicit 15-second timeout on urlopen to prevent terminal hangs
+                with urllib.request.urlopen(req, timeout=15) as resp:
                     resp_bytes = resp.read()
                     resp_data = json.loads(resp_bytes.decode("utf-8"))
                     
@@ -117,6 +118,13 @@ def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_
                     break
                 else:
                     raise RuntimeError(last_error)
+            except (urllib.error.URLError, TimeoutError, TimeoutError) as e:
+                last_error = f"Network Timeout Error ({str(e)}) on model '{model}'"
+                if attempt < max_retries - 1:
+                    time.sleep(1)
+                    continue
+                else:
+                    break
             except Exception as e:
                 last_error = str(e)
                 break
