@@ -1,0 +1,23 @@
+# Environment & Secret Files (CRITICAL - DO NOT REMOVE)
+.env
+.env.*
+*.env
+*.key
+*.pem
+api_key*
+secrets*
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# IDE & System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
