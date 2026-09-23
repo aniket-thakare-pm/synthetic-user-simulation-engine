@@ -10,7 +10,7 @@ from guardrail_box import run_deterministic_precheck, build_guardrailed_system_p
 def get_available_gemini_models(api_key: str) -> list:
     """
     Dynamically queries the Gemini API to list models.
-    Silently returns empty list if ListModels is restricted for the API key.
+    Excludes TTS, Audio, Embedding, and Image generation models.
     """
     api_key = api_key.strip().strip("'").strip('"')
     url = f"https://generativelanguage.googleapis.com/v1beta/models?key={api_key}"
@@ -20,8 +20,11 @@ def get_available_gemini_models(api_key: str) -> list:
             data = json.loads(resp.read().decode("utf-8"))
             models = []
             for m in data.get("models", []):
+                name = m.get("name", "").replace("models/", "")
+                name_lower = name.lower()
+                if any(x in name_lower for x in ["tts", "audio", "embed", "imagen", "transcribe"]):
+                    continue
                 if "generateContent" in m.get("supportedGenerationMethods", []):
-                    name = m.get("name", "").replace("models/", "")
                     models.append(name)
             return models
     except Exception:
@@ -55,6 +58,12 @@ def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_
     for m in available_models:
         if m not in candidate_models:
             candidate_models.append(m)
+            
+    # Filter out non-text models (TTS, Audio, Image generation)
+    candidate_models = [
+        m for m in candidate_models 
+        if not any(x in m.lower() for x in ["tts", "audio", "embed", "imagen", "transcribe"])
+    ]
         
     last_error = None
     
