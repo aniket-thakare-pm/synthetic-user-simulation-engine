@@ -1,6 +1,6 @@
 import json
 import urllib.request
-from typing import List
+from typing import List, Dict, Any, Optional
 from persona_schema import Persona, Demographics, Psychographics
 
 def generate_dynamic_mece_panel(product_or_domain: str, api_key: str, num_personas: int = 5) -> List[Persona]:
@@ -81,35 +81,50 @@ Return ONLY a valid JSON array of objects with this exact structure:
     except Exception as e:
         raise RuntimeError(f"Failed to generate dynamic personas for domain '{product_or_domain}': {str(e)}")
 
-def generate_zoomed_subpanel(selected_personas: List[Persona], product_context: str, api_key: str, num_subpersonas: int = 5) -> List[Persona]:
+def generate_zoomed_subpanel(
+    selected_personas: List[Persona], 
+    product_context: str, 
+    api_key: str, 
+    interview_history: Optional[List[Dict[str, Any]]] = None,
+    num_subpersonas: int = 5
+) -> List[Persona]:
     """
-    Funnel Zooming: Takes qualified interested personas and expands their core traits
-    into a 5 Micro-MECE Sub-Persona Panel tailored for deep feature/pricing testing.
+    Funnel Zooming: Takes qualified interested personas AND their expressed interview answers
+    (problem-first responses) to expand into a 5 Micro-MECE Sub-Persona Panel tailored for deep testing.
     """
     api_key = api_key.strip().strip("'").strip('"')
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     
     selected_summary = "\n".join([
-        f"- {p.name} ({p.demographics.occupation}): Pain point = '{p.psychographics.primary_pain_point}', Budget Cap = ${p.psychographics.price_ceiling_monthly}/mo"
+        f"- {p.name} ({p.demographics.occupation}): Primary Pain = '{p.psychographics.primary_pain_point}', Budget Cap = ${p.psychographics.price_ceiling_monthly}/mo"
         for p in selected_personas
     ])
     
+    history_str = ""
+    if interview_history:
+        history_str = "\nEXPRESSED PROBLEM-FIRST INTERVIEW RESPONSES FROM SESSION:\n"
+        for idx, item in enumerate(interview_history[-10:], 1):  # Include last 10 Q&A turns
+            history_str += f"Q: '{item['question']}'\n   -> {item['persona_name']}: \"{item['response_text']}\"\n"
+            if item.get('primary_objection'):
+                history_str += f"      [Expressed Concern: {item['primary_objection']}]\n"
+
     prompt = f"""
-You are a Lead Product Strategist doing deep-dive sub-segmentation research.
+You are a Lead Product Strategist executing Funnel Zooming (Sub-Segment Research).
 
-CONTEXT:
-We conducted a screening interview for the product concept: "{product_context}".
-Out of the initial broad audience, the following target personas were QUALIFIED as interested potential buyers:
+CONTEXT & PRODUCT DOMAIN:
+"{product_context}"
 
-QUALIFIED INTERESTED TARGET AUDIENCE:
+QUALIFIED TARGET PERSONAS SELECTED FOR ZOOM:
 {selected_summary}
+{history_str}
 
 YOUR TASK:
-Take this specific target audience and EXPAND it into {num_subpersonas} Micro-MECE Sub-Personas.
-These sub-personas represent distinct sub-segments of this target buyer pool (e.g. High-volume Power User, Email-first User, Tax Compliance Stickler, Team Admin, Mobile-only User).
+Analyze the expressed pain points, workarounds, and frustrations in the interview transcript above.
+Expand this qualified target audience into {num_subpersonas} Micro-MECE Sub-Personas.
+These sub-personas MUST represent distinct micro-archetypes of this interested target group (e.g. High-volume Power User, Email-first User, Compliance Stickler, Team Admin, Mobile-only User).
 
 REQUIREMENTS:
-1. Each sub-persona MUST be a potential buyer of "{product_context}", but differ sharply on workflow preferences, feature priorities, team size, and micro-frustrations.
+1. Ground the sub-personas directly in the pain points expressed in the interview transcript.
 2. Provide explicit guardrail rules for each sub-persona to test edge-case workflow failures.
 
 OUTPUT FORMAT:

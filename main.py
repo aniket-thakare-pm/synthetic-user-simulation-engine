@@ -6,7 +6,7 @@ from interview_engine import interview_persona_stateless
 
 def main():
     print("=" * 75)
-    print(" 🚀 SYNTHETIC USER SIMULATION ENGINE (HYBRID FUNNEL ZOOMING)")
+    print(" 🚀 SYNTHETIC USER SIMULATION ENGINE (TRANSCRIPT-AWARE FUNNEL ZOOMING)")
     print("=" * 75)
     
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -24,6 +24,7 @@ def main():
     
     active_panel = SAMPLE_PERSONAS
     product_context = "General B2B / Consumer Software"
+    session_history = []  # Tracks Q&A transcript for transcript-aware Zooming
     
     if choice == "2":
         domain = input("\nEnter your target Domain / Product Category (e.g., 'Pet Health Tech', 'Meesho Creator Program'): ").strip()
@@ -42,8 +43,8 @@ def main():
         print(f"  {idx}. {p.name:<20} | Role: {p.demographics.occupation:<32} | Budget: ${p.psychographics.price_ceiling_monthly:<5}/mo")
         
     print("\n" + "-" * 75)
-    print("💡 TIPS: Type your question to interview the panel.")
-    print("💡 Type 'zoom' at any time to drop non-buyers & expand interested personas into 5 sub-personas!")
+    print("💡 TIPS: Ask problem-first discovery questions without pitching upfront!")
+    print("💡 Type 'zoom' at any time to analyze expressed pain points & expand qualified personas!")
     print("-" * 75)
     
     while True:
@@ -60,7 +61,7 @@ def main():
                 
             if user_input.lower() == 'zoom':
                 print("\n" + "=" * 75)
-                print(" 🔍 FUNNEL ZOOMING: SUB-SEGMENTATION SELECTION")
+                print(" 🔍 TRANSCRIPT-AWARE FUNNEL ZOOMING")
                 print("=" * 75)
                 print("Current Panel Personas:")
                 for idx, p in enumerate(active_panel, 1):
@@ -85,12 +86,19 @@ def main():
                 selected_names = ", ".join([p.name for p in selected_personas])
                 
                 print(f"\n🎯 Zooming into target segment: [{selected_names}]")
-                print(f"🔮 Generating 5 Micro-MECE Sub-Personas for '{product_context}'...")
+                print(f"🧠 Analyzing session transcript ({len(session_history)} Q&A turns)...")
+                print(f"🔮 Generating 5 Micro-MECE Sub-Personas grounded in expressed interview pain points...")
                 
                 try:
-                    zoomed_panel = generate_zoomed_subpanel(selected_personas, product_context, api_key, num_subpersonas=5)
+                    zoomed_panel = generate_zoomed_subpanel(
+                        selected_personas, 
+                        product_context, 
+                        api_key, 
+                        interview_history=session_history,
+                        num_subpersonas=5
+                    )
                     active_panel = zoomed_panel
-                    print(f"✅ Successfully expanded into 5 Micro-MECE Sub-Personas!")
+                    print(f"✅ Successfully expanded into 5 Micro-MECE Sub-Personas grounded in interview responses!")
                     print("\nNew Active Zoomed Sub-Panel:")
                     for idx, p in enumerate(active_panel, 1):
                         print(f"  {idx}. {p.name:<20} | Role: {p.demographics.occupation:<32} | Budget: ${p.psychographics.price_ceiling_monthly:<5}/mo")
@@ -117,6 +125,14 @@ def main():
                     
                     if response.primary_objection:
                         print(f"   🚩 Concern: {response.primary_objection}")
+                        
+                    # Save to session transcript for Transcript-Aware Zooming
+                    session_history.append({
+                        "question": user_input,
+                        "persona_name": persona.name,
+                        "response_text": response.response_text,
+                        "primary_objection": response.primary_objection
+                    })
                         
                 except Exception as e:
                     print(f"❌ Error interviewing {persona.name}: {e}")
