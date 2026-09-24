@@ -1,7 +1,7 @@
 import json
 from typing import List, Dict, Any, Optional
 from persona_schema import Persona, Demographics, Psychographics
-from interview_engine import call_gemini_api
+from interview_engine import call_llm_api
 
 def generate_dynamic_mece_panel(product_or_domain: str, api_key: str, num_personas: int = 5) -> List[Persona]:
     """
@@ -49,7 +49,7 @@ Return ONLY a valid JSON array of objects matching this exact structure:
     user_query = f"Generate {num_personas} MECE personas for domain '{product_or_domain}' in JSON format."
     
     try:
-        json_list = call_gemini_api(api_key, system_prompt, user_query)
+        json_list = call_llm_api(api_key, system_prompt, user_query)
         if isinstance(json_list, dict) and "personas" in json_list:
             json_list = json_list["personas"]
             
@@ -145,7 +145,7 @@ Return ONLY a valid JSON array of objects matching this exact structure:
     user_query = f"Generate {num_subpersonas} zoomed micro-MECE sub-personas in JSON format."
     
     try:
-        json_list = call_gemini_api(api_key, system_prompt, user_query)
+        json_list = call_llm_api(api_key, system_prompt, user_query)
         if isinstance(json_list, dict) and "personas" in json_list:
             json_list = json_list["personas"]
             

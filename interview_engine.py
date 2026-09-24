@@ -3,130 +3,115 @@ import json
 import time
 import urllib.request
 import urllib.error
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from persona_schema import Persona, InterviewResponse
 from guardrail_box import run_deterministic_precheck, build_guardrailed_system_prompt
 
-import functools
-
-@functools.lru_cache(maxsize=4)
-def get_available_gemini_models(api_key: str) -> tuple:
+def load_env_key() -> str:
     """
-    Dynamically queries the Gemini API to list models.
-    Excludes TTS, Audio, Embedding, and Image generation models.
+    Loads API key from environment variable or local .env file.
     """
-    api_key = api_key.strip().strip("'").strip('"')
-    url = f"https://generativelanguage.googleapis.com/v1beta/models?key={api_key}"
-    req = urllib.request.Request(url, method="GET")
-    try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            models = []
-            for m in data.get("models", []):
-                name = m.get("name", "").replace("models/", "")
-                name_lower = name.lower()
-                if any(x in name_lower for x in ["tts", "audio", "embed", "imagen", "transcribe"]):
-                    continue
-                if "generateContent" in m.get("supportedGenerationMethods", []):
-                    models.append(name)
-            return tuple(models)
-    except Exception:
-        return ()
-
-def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_name: str = None) -> Dict[str, Any]:
-    """
-    Calls the Gemini API directly via HTTP REST endpoint.
-    Includes exponential backoff retries and model fallback on 503/429/Timeout errors.
-    """
-    api_key = api_key.strip().strip("'").strip('"')
-    available_models = get_available_gemini_models(api_key)
+    key = os.environ.get("OPENROUTER_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    if key:
+        return key.strip().strip("'").strip('"')
     
-    dashboard_models = [
-        "gemini-2.5-flash",
-        "gemini-flash-latest",
-        "gemini-3.6-flash",
-        "gemini-3.5-flash"
+    env_path = os.path.join(os.path.dirname(__file__), ".env")
+    if os.path.exists(env_path):
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    k_str = k.strip()
+                    val_str = v.strip().strip("'").strip('"')
+                    if k_str in ["OPENROUTER_API_KEY", "GEMINI_API_KEY"]:
+                        os.environ[k_str] = val_str
+                        return val_str
+    return ""
+
+def clean_json_response(raw_text: str) -> Dict[str, Any]:
+    """
+    Strips markdown fences and parses clean JSON dictionary.
+    """
+    text = raw_text.strip()
+    if text.startswith("```"):
+        lines = text.splitlines()
+        if lines[0].startswith("```"):
+            lines = lines[1:]
+        if lines and lines[-1].startswith("```"):
+            lines = lines[:-1]
+        text = "\n".join(lines).strip()
+    return json.loads(text)
+
+def call_openrouter_api(api_key: str, system_prompt: str, user_question: str, model_name: str = None) -> Dict[str, Any]:
+    """
+    Calls OpenRouter API chat completion endpoint with automatic fallback across allowed fast models.
+    """
+    api_key = api_key.strip().strip("'").strip('"')
+    
+    allowed_models = [
+        "liquid/lfm-2.5-2.6b:free",
+        "nex-agi/nex-n2.5-pro:free",
+        "nex-agi/nex-n2.5-mini:free",
+        "inclusionai/ling-3.0-flash-sante:free",
+        "inclusionai/ling-3.0-flash-fin:free",
+        "qwen/qwen3.8-27b:free",
+        "google/gemma-4-31b-it:free"
     ]
     
     candidate_models = []
     if model_name:
         candidate_models.append(model_name)
-        
-    for m in dashboard_models:
-        if m in available_models and m not in candidate_models:
+    for m in allowed_models:
+        if m not in candidate_models:
             candidate_models.append(m)
 
-    if not candidate_models:
-        for m in available_models:
-            if m not in candidate_models and not any(x in m.lower() for x in ["tts", "audio", "embed", "imagen", "transcribe", "gemma", "lyria", "robotics", "computer-use", "antigravity", "deep-research"]):
-                candidate_models.append(m)
-                
-    if not candidate_models:
-        candidate_models = ["gemini-2.5-flash"]
-        
+    url = "https://openrouter.ai/api/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "HTTP-Referer": "https://github.com/aniket-thakare-pm/synthetic-user-simulation-engine",
+        "X-Title": "Synthetic User Simulation Engine",
+        "Content-Type": "application/json"
+    }
+
     last_error = None
-    
     for model in candidate_models:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-        
         payload = {
-            "system_instruction": {
-                "parts": [{"text": system_prompt}]
-            },
-            "contents": [
-                {
-                    "role": "user",
-                    "parts": [{"text": f"User Interview Question:\n'{user_question}'\n\nProvide your response in JSON format."}]
-                }
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": f"User Interview Question:\n'{user_question}'\n\nProvide your response ONLY as a valid JSON object matching the requested schema."}
             ],
-            "generationConfig": {
-                "temperature": 0.3,
-                "responseMimeType": "application/json"
-            }
+            "temperature": 0.3,
+            "response_format": {"type": "json_object"}
         }
-        
-        headers = {"Content-Type": "application/json"}
+
         data = json.dumps(payload).encode("utf-8")
-        
-        max_retries = 5
+        max_retries = 3
         for attempt in range(max_retries):
             req = urllib.request.Request(url, data=data, headers=headers, method="POST")
             try:
-                # Set explicit 15-second timeout on urlopen to prevent terminal hangs
-                with urllib.request.urlopen(req, timeout=15) as resp:
+                with urllib.request.urlopen(req, timeout=12) as resp:
                     resp_bytes = resp.read()
                     resp_data = json.loads(resp_bytes.decode("utf-8"))
                     
-                    candidates = resp_data.get("candidates", [])
-                    if not candidates:
-                        raise ValueError(f"Gemini API returned no response candidates for model '{model}'.")
+                    choices = resp_data.get("choices", [])
+                    if not choices:
+                        raise ValueError(f"OpenRouter API returned no response choices for model '{model}'.")
                     
-                    text_content = candidates[0]["content"]["parts"][0]["text"]
-                    return json.loads(text_content)
+                    text_content = choices[0]["message"]["content"]
+                    return clean_json_response(text_content)
             except urllib.error.HTTPError as e:
                 error_body = e.read().decode("utf-8")
-                last_error = f"Gemini API HTTP Error ({e.code}) for model '{model}': {error_body}"
-                
-                if e.code in (503, 429):
+                last_error = f"OpenRouter API Error ({e.code}) for model '{model}': {error_body}"
+                if e.code in (429, 502, 503, 504):
                     if attempt < max_retries - 1:
-                        # Extract suggested retryDelay if present in JSON error response
-                        wait_sec = 20
-                        try:
-                            err_json = json.loads(error_body)
-                            for d in err_json.get("error", {}).get("details", []):
-                                if "retryDelay" in d:
-                                    delay_str = d["retryDelay"].replace("s", "")
-                                    wait_sec = max(5, int(float(delay_str)) + 2)
-                        except Exception:
-                            wait_sec = 20
-                        time.sleep(wait_sec)
+                        time.sleep(1.5 * (attempt + 1))
                         continue
                     else:
                         break
-                elif e.code == 404:
-                    break
                 else:
-                    raise RuntimeError(last_error)
+                    break
             except (urllib.error.URLError, TimeoutError) as e:
                 last_error = f"Network Timeout Error ({str(e)}) on model '{model}'"
                 if attempt < max_retries - 1:
@@ -137,17 +122,68 @@ def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_
             except Exception as e:
                 last_error = str(e)
                 break
-            
-    raise RuntimeError(f"All model attempts failed. Last error: {last_error}")
 
-def interview_persona_stateless(persona: Persona, question_text: str, api_key: str) -> InterviewResponse:
+    raise RuntimeError(f"All OpenRouter model attempts failed. Last error: {last_error}")
+
+def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_name: str = None) -> Dict[str, Any]:
     """
-    Executes a single-turn, stateless interview run for a guardrailed persona,
-    returning continuous McFadden logit probability splits, directional vectors, and macro workaround descriptions.
+    Fallback Gemini REST API endpoint call.
     """
+    api_key = api_key.strip().strip("'").strip('"')
+    candidate_models = ["gemini-2.5-flash", "gemini-3.6-flash", "gemini-3.5-flash"]
+    if model_name:
+        candidate_models.insert(0, model_name)
+        
+    last_error = None
+    for model in candidate_models:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+        payload = {
+            "system_instruction": {"parts": [{"text": system_prompt}]},
+            "contents": [{"role": "user", "parts": [{"text": f"User Interview Question:\n'{user_question}'\n\nProvide your response in JSON format."}]}],
+            "generationConfig": {"temperature": 0.3, "responseMimeType": "application/json"}
+        }
+        headers = {"Content-Type": "application/json"}
+        data = json.dumps(payload).encode("utf-8")
+        
+        for attempt in range(3):
+            req = urllib.request.Request(url, data=data, headers=headers, method="POST")
+            try:
+                with urllib.request.urlopen(req, timeout=12) as resp:
+                    resp_bytes = resp.read()
+                    resp_data = json.loads(resp_bytes.decode("utf-8"))
+                    candidates = resp_data.get("candidates", [])
+                    if not candidates:
+                        raise ValueError("Gemini returned no response candidates.")
+                    text_content = candidates[0]["content"]["parts"][0]["text"]
+                    return clean_json_response(text_content)
+            except Exception as e:
+                last_error = str(e)
+                time.sleep(1)
+                break
+    raise RuntimeError(f"All Gemini API attempts failed: {last_error}")
+
+def call_llm_api(api_key: str, system_prompt: str, user_question: str, model_name: str = None) -> Dict[str, Any]:
+    """
+    Routes to OpenRouter or Gemini API based on key format.
+    """
+    if not api_key:
+        api_key = load_env_key()
+    
+    if api_key.startswith("sk-or-"):
+        return call_openrouter_api(api_key, system_prompt, user_question, model_name=model_name)
+    else:
+        return call_gemini_api(api_key, system_prompt, user_question, model_name=model_name)
+
+def interview_persona_stateless(persona: Persona, question_text: str, api_key: str = None) -> InterviewResponse:
+    """
+    Executes a single-turn, stateless interview run for a guardrailed persona via OpenRouter/Gemini LLM.
+    """
+    if not api_key:
+        api_key = load_env_key()
+        
     auto_rejected, precheck_reason = run_deterministic_precheck(persona, question_text)
     system_prompt = build_guardrailed_system_prompt(persona, precheck_reason=precheck_reason)
-    json_output = call_gemini_api(api_key, system_prompt, question_text)
+    json_output = call_llm_api(api_key, system_prompt, question_text)
     
     maj_pct = json_output.get("majority_percent", 70)
     min_pct = json_output.get("minority_percent", 30)

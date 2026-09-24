@@ -2,46 +2,59 @@ import os
 import sys
 from sample_personas import SAMPLE_PERSONAS
 from persona_generator import generate_dynamic_mece_panel, generate_zoomed_subpanel
-from interview_engine import interview_persona_stateless
+from interview_engine import interview_persona_stateless, load_env_key
 
 def main():
     print("=" * 75)
-    print(" 🚀 SYNTHETIC USER SIMULATION ENGINE (DIRECTIONAL VECTOR & LOGIT WEIGHTING)")
+    print(" 🚀 SYNTHETIC USER SIMULATION ENGINE (OPENROUTER & MCFADDEN LOGIT ENGINE)")
     print("=" * 75)
     
-    api_key = os.environ.get("GEMINI_API_KEY")
+    api_key = load_env_key()
     if not api_key:
-        api_key = input("\n🔑 Enter your Gemini API Key: ").strip()
+        api_key = input("\n🔑 Enter your OpenRouter / LLM API Key: ").strip()
         if not api_key:
             print("❌ Error: API Key is required.")
             sys.exit(1)
             
-    print("\nSelect Persona Panel Setup Mode:")
-    print("  1. Use Default 5 MECE General Panel (Accountant, Founder, Retailer, Compliance, Freelancer)")
+    print("\nSelect Target Geography:")
+    print("  1. 🌐 Global / United States (Grounded in US Census & Pew/Baymard Studies)")
+    print("  2. 🇮🇳 India (Grounded in RBI/NPCI Digital Payment & Bain/PwC India Studies)")
+    
+    geo_choice = input("\nGeography Choice (1 or 2, default 1): ").strip()
+    
+    if geo_choice == "2":
+        from indian_sample_personas import INDIAN_SAMPLE_PERSONAS
+        active_panel = INDIAN_SAMPLE_PERSONAS
+        target_geo = "India"
+    else:
+        active_panel = SAMPLE_PERSONAS
+        target_geo = "US"
+
+    print(f"\nSelect Persona Panel Setup Mode for {target_geo}:")
+    print("  1. Use Default 5 MECE Regional Panel")
     print("  2. Generate Custom MECE Persona Panel for ANY Domain / Product Category")
     
     choice = input("\nChoice (1 or 2, default 1): ").strip()
     
-    active_panel = SAMPLE_PERSONAS
-    product_context = "General B2B / Consumer Software"
+    product_context = f"General Software [{target_geo}]"
     session_history = []
     
     if choice == "2":
         domain = input("\nEnter your target Domain / Product Category (e.g., 'Pet Health Tech', 'Meesho Creator Program'): ").strip()
         if domain:
             product_context = domain
-            print(f"\n🔮 Generating 5 Domain-Specific MECE Personas for '{domain}'...")
+            print(f"\n🔮 Generating 5 Domain-Specific MECE Personas for '{domain}' in {target_geo}...")
             try:
                 active_panel = generate_dynamic_mece_panel(domain, api_key, num_personas=5)
                 print(f"✅ Successfully generated 5 tailored personas for '{domain}'!")
             except Exception as e:
                 print(f"⚠️ Error generating dynamic panel: {e}. Falling back to default panel.")
-                active_panel = SAMPLE_PERSONAS
                 
-    print(f"\n✅ Active MECE Persona Panel (N={len(active_panel)}):")
+    print(f"\n✅ Active MECE Persona Panel (N={len(active_panel)}, Region={target_geo}):")
     for idx, p in enumerate(active_panel, 1):
         weight_str = f"Weight: {p.population_weight*100:.0f}%" if hasattr(p, 'population_weight') else "Weight: 20%"
-        print(f"  {idx}. {p.name:<20} | Role: {p.demographics.occupation:<32} | Budget: ${p.psychographics.price_ceiling_monthly:<5}/mo | {weight_str}")
+        budget_curr = f"₹{p.psychographics.price_ceiling_monthly:.0f}" if target_geo == "India" else f"${p.psychographics.price_ceiling_monthly:.0f}"
+        print(f"  {idx}. {p.name:<20} | Role: {p.demographics.occupation:<35} | Budget: {budget_curr}/mo | {weight_str}")
         
     print("\n" + "-" * 75)
     print("💡 TIPS: Ask problem-first discovery questions without pitching upfront!")

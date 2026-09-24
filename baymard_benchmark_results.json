@@ -1,0 +1,307 @@
+[
+  {
+    "question_id": "Q1",
+    "title": "Unexpected Extra Costs (Shipping/Taxes/Fees)",
+    "ground_truth": 48.0,
+    "gen_weighted_score": 15.0,
+    "baymard_weighted_score": 15.0,
+    "abs_error_gen": 33.0,
+    "abs_error_baymard": 33.0,
+    "persona_breakdown": [
+      {
+        "persona_name": "Sarah Jenkins",
+        "role": "Senior Accountant [The Value Auditor]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.35,
+        "reasoning": "I generally keep my shopping carts even when extra costs appear at checkout, since that's how e-commerce works. But I'm very sensitive to hidden fees that aren't disclosed upfront, which can make me reconsider my purchase decisions.",
+        "latency": 16.48275089263916
+      },
+      {
+        "persona_name": "Alex Chen",
+        "role": "Startup Founder [The Pragmatic Optimizer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.35,
+        "baymard_weight": 0.3,
+        "reasoning": "As someone who values speed and time efficiency, I tend to keep my cart even with modest shipping or tax fees. Only when the total cost becomes clearly prohibitive or hidden at the last moment would I consider leaving my items behind.",
+        "latency": 16.23811912536621
+      },
+      {
+        "persona_name": "David Miller",
+        "role": "Local Retail Store Owner [The Friction-Sensitive Novice]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.2,
+        "reasoning": "As someone who prefers simple and straightforward shopping, I would keep my cart even when there are extra costs because I don't want to deal with complicated fee calculations at the last moment. Most of us just want to buy what we need without worrying about hidden charges.",
+        "latency": 13.083421468734741
+      },
+      {
+        "persona_name": "Elena Rostova",
+        "role": "Enterprise Risk Manager [The Devil's Advocate]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.05,
+        "baymard_weight": 0.1,
+        "reasoning": "I would keep my cart because hidden costs create unnecessary risk and uncertainty. However, I always prefer seeing all fees upfront so there's no surprise at checkout. Most people follow this pattern, though a few will cancel if the total cost seems unreasonable.",
+        "latency": 12.289333581924438
+      },
+      {
+        "persona_name": "Marcus Vance",
+        "role": "Freelance Designer [The Bargain Explorer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.1,
+        "baymard_weight": 0.05,
+        "reasoning": "As Marcus Vance, I'd typically keep my cart and finish the purchase even when shipping or taxes add up, since I'm accustomed to paying for delivery and service. However, if those extra costs were hidden until checkout and seemed excessive, I'd drop everything and look elsewhere.",
+        "latency": 13.487890243530273
+      }
+    ]
+  },
+  {
+    "question_id": "Q2",
+    "title": "Mandatory Account Creation",
+    "ground_truth": 25.0,
+    "gen_weighted_score": 15.0,
+    "baymard_weighted_score": 15.0,
+    "abs_error_gen": 10.0,
+    "abs_error_baymard": 10.0,
+    "persona_breakdown": [
+      {
+        "persona_name": "Sarah Jenkins",
+        "role": "Senior Accountant [The Value Auditor]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.25,
+        "reasoning": "I tend to keep my current payment methods and checkout processes since they've worked well for me. I'm comfortable with the standard flow and don't typically switch providers just because of minor inconveniences like account registration.",
+        "latency": 13.477198362350464
+      },
+      {
+        "persona_name": "Alex Chen",
+        "role": "Startup Founder [The Pragmatic Optimizer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.35,
+        "baymard_weight": 0.25,
+        "reasoning": "As someone who values speed and dislikes friction-heavy processes, I would almost always keep my order when forced to create an account. Only those with strong privacy concerns or extreme impatience would abandon their purchase.",
+        "latency": 5.559216499328613
+      },
+      {
+        "persona_name": "David Miller",
+        "role": "Local Retail Store Owner [The Friction-Sensitive Novice]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.25,
+        "reasoning": "As someone who values simplicity and doesn't like complicated steps, I would stick with my order even if I had to create an account. The extra effort feels like unnecessary friction that no one needs to go through.",
+        "latency": 11.920568227767944
+      },
+      {
+        "persona_name": "Elena Rostova",
+        "role": "Enterprise Risk Manager [The Devil's Advocate]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.05,
+        "baymard_weight": 0.15,
+        "reasoning": "As someone who prioritizes security and quality control, I understand why some might hesitate, but in practice most customers won't abandon their order when asked to create an account. However, we should still monitor for any drop-off patterns that indicate higher friction points.",
+        "latency": 5.668282985687256
+      },
+      {
+        "persona_name": "Marcus Vance",
+        "role": "Freelance Designer [The Bargain Explorer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.1,
+        "baymard_weight": 0.1,
+        "reasoning": "As someone who works on a strict $0/month budget, I'd stick with the service even if it asks for an account upfront. My priority is free value with no hidden costs, so minor friction won't make me leave.",
+        "latency": 8.685984134674072
+      }
+    ]
+  },
+  {
+    "question_id": "Q3",
+    "title": "Slow / Unclear Delivery Speeds",
+    "ground_truth": 23.0,
+    "gen_weighted_score": 18.5,
+    "baymard_weighted_score": 25.5,
+    "abs_error_gen": 4.5,
+    "abs_error_baymard": 2.5,
+    "persona_breakdown": [
+      {
+        "persona_name": "Sarah Jenkins",
+        "role": "Senior Accountant [The Value Auditor]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.2,
+        "reasoning": "I'm generally satisfied with my current subscriptions since I rarely encounter issues with delivery timing. When I know exactly when my package will arrive, I trust the process and keep my order without hesitation.",
+        "latency": 6.450162172317505
+      },
+      {
+        "persona_name": "Alex Chen",
+        "role": "Startup Founder [The Pragmatic Optimizer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.35,
+        "baymard_weight": 0.25,
+        "reasoning": "Most of us stick with our current providers even when delivery details aren't crystal clear, simply because the habit is set and switching feels like extra work. Only those who value absolute transparency above all else would reconsider paying for better tracking.",
+        "latency": 2.4712278842926025
+      },
+      {
+        "persona_name": "David Miller",
+        "role": "Local Retail Store Owner [The Friction-Sensitive Novice]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.3,
+        "reasoning": "I wouldn't abandon my order because my current store has been reliable and simple for years. I trust the process and don't need all the fancy tracking features. Most customers just want easy, predictable shopping without extra stress.",
+        "latency": 3.4019761085510254
+      },
+      {
+        "persona_name": "Elena Rostova",
+        "role": "Enterprise Risk Manager [The Devil's Advocate]",
+        "action": "CANCEL",
+        "value": 85,
+        "gen_weight": 0.05,
+        "baymard_weight": 0.15,
+        "reasoning": "I would cancel the order if delivery times aren't clearly shown before payment, since unambiguous information reduces my risk exposure and prevents wasted expenditure on uncertain deliveries.",
+        "latency": 3.3274240493774414
+      },
+      {
+        "persona_name": "Marcus Vance",
+        "role": "Freelance Designer [The Bargain Explorer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.1,
+        "baymard_weight": 0.1,
+        "reasoning": "As a freelancer who refuses to pay for subscriptions, I'd stay with a service even if delivery estimates are vague since the cost is zero. Only those who prioritize reliability above all else would consider leaving if the wait times become unacceptably long.",
+        "latency": 4.471567869186401
+      }
+    ]
+  },
+  {
+    "question_id": "Q4",
+    "title": "Customer Reviews & Star Ratings Reliance",
+    "ground_truth": 75.0,
+    "gen_weighted_score": 80.0,
+    "baymard_weighted_score": 72.2,
+    "abs_error_gen": 5.0,
+    "abs_error_baymard": 2.8,
+    "persona_breakdown": [
+      {
+        "persona_name": "Sarah Jenkins",
+        "role": "Senior Accountant [The Value Auditor]",
+        "action": "KEEP",
+        "value": 85,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.25,
+        "reasoning": "I always make it a habit to scan recent reviews and look at overall star ratings before finalizing any purchase. This simple step gives me confidence that I'm getting good value and avoids any unpleasant surprises later. It takes only a few minutes but saves me from costly mistakes.",
+        "latency": 7.911509990692139
+      },
+      {
+        "persona_name": "Alex Chen",
+        "role": "Startup Founder [The Pragmatic Optimizer]",
+        "action": "KEEP",
+        "value": 85,
+        "gen_weight": 0.35,
+        "baymard_weight": 0.25,
+        "reasoning": "I prioritize quick decisions by verifying reviews before clicking buy, so I rarely waste time on unqualified purchases. Only a minority ignores this step and proceeds anyway, which I find inefficient.",
+        "latency": 6.012041807174683
+      },
+      {
+        "persona_name": "David Miller",
+        "role": "Local Retail Store Owner [The Friction-Sensitive Novice]",
+        "action": "KEEP",
+        "value": 85,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.2,
+        "reasoning": "As a store owner who values simplicity, I prefer to keep my shopping routine unchanged. I don't spend extra time searching through reviews or star ratings; I just buy what I see and trust my experience.",
+        "latency": 3.907926559448242
+      },
+      {
+        "persona_name": "Elena Rostova",
+        "role": "Enterprise Risk Manager [The Devil's Advocate]",
+        "action": "REJECT",
+        "value": 15,
+        "gen_weight": 0.05,
+        "baymard_weight": 0.15,
+        "reasoning": "I find spending hours per order reviewing every single review draining and counterproductive. My standard operating procedure is to accept the platform's curated views and only dig deeper when there's a genuine red flag.",
+        "latency": 6.408092737197876
+      },
+      {
+        "persona_name": "Marcus Vance",
+        "role": "Freelance Designer [The Bargain Explorer]",
+        "action": "ACCEPT",
+        "value": 70,
+        "gen_weight": 0.1,
+        "baymard_weight": 0.15,
+        "reasoning": "I actively check reviews when the purchase carries any meaningful financial risk, because I cannot afford to waste money on something disappointing. For inexpensive, familiar purchases, I rely more on habit and convenience. Fake or overly polished reviews are my main concern.",
+        "latency": 88.69345545768738
+      }
+    ]
+  },
+  {
+    "question_id": "Q5",
+    "title": "Strict / Friction Return Policy",
+    "ground_truth": 18.0,
+    "gen_weighted_score": 15.0,
+    "baymard_weighted_score": 15.0,
+    "abs_error_gen": 3.0,
+    "abs_error_baymard": 3.0,
+    "persona_breakdown": [
+      {
+        "persona_name": "Sarah Jenkins",
+        "role": "Senior Accountant [The Value Auditor]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.25,
+        "reasoning": "I generally keep my orders since the inconvenience of managing returns isn't worth the effort. However, some users with frequent returns or tight budgets might cancel if the costs become prohibitive.",
+        "latency": 7.8000710010528564
+      },
+      {
+        "persona_name": "Alex Chen",
+        "role": "Startup Founder [The Pragmatic Optimizer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.35,
+        "baymard_weight": 0.25,
+        "reasoning": "As Alex Chen, I'd say most shoppers would keep their orders even with strict return policies since the experience matters more than theoretical return flexibility. Only those with extreme price sensitivity or frustration from paying return shipping fees would consider leaving.",
+        "latency": 4.911376237869263
+      },
+      {
+        "persona_name": "David Miller",
+        "role": "Local Retail Store Owner [The Friction-Sensitive Novice]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.25,
+        "baymard_weight": 0.2,
+        "reasoning": "As someone who values simplicity and human support, I stick with what works for me. Strict return policies and extra costs make me hesitant, so I prefer not to risk complications when shopping online.",
+        "latency": 3.558809995651245
+      },
+      {
+        "persona_name": "Elena Rostova",
+        "role": "Enterprise Risk Manager [The Devil's Advocate]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.05,
+        "baymard_weight": 0.15,
+        "reasoning": "I'd keep my order because the inconvenience of managing returns outweighs the theoretical benefit of a shorter window, but I'd still monitor those strict policies closely since they create potential friction points.",
+        "latency": 8.341107606887817
+      },
+      {
+        "persona_name": "Marcus Vance",
+        "role": "Freelance Designer [The Bargain Explorer]",
+        "action": "KEEP",
+        "value": 15,
+        "gen_weight": 0.1,
+        "baymard_weight": 0.15,
+        "reasoning": "I'd keep my orders even with strict return policies since the items are worth the hassle. Only those facing near-zero return windows plus mandatory shipping fees would consider walking away.",
+        "latency": 5.528315782546997
+      }
+    ]
+  }
+]
