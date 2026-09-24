@@ -6,7 +6,7 @@ from interview_engine import interview_persona_stateless
 
 def main():
     print("=" * 75)
-    print(" 🚀 SYNTHETIC USER SIMULATION ENGINE (TRANSCRIPT-AWARE FUNNEL ZOOMING)")
+    print(" 🚀 SYNTHETIC USER SIMULATION ENGINE (DIRECTIONAL VECTOR & LOGIT WEIGHTING)")
     print("=" * 75)
     
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -40,7 +40,8 @@ def main():
                 
     print(f"\n✅ Active MECE Persona Panel (N={len(active_panel)}):")
     for idx, p in enumerate(active_panel, 1):
-        print(f"  {idx}. {p.name:<20} | Role: {p.demographics.occupation:<32} | Budget: ${p.psychographics.price_ceiling_monthly:<5}/mo")
+        weight_str = f"Weight: {p.population_weight*100:.0f}%" if hasattr(p, 'population_weight') else "Weight: 20%"
+        print(f"  {idx}. {p.name:<20} | Role: {p.demographics.occupation:<32} | Budget: ${p.psychographics.price_ceiling_monthly:<5}/mo | {weight_str}")
         
     print("\n" + "-" * 75)
     print("💡 TIPS: Ask problem-first discovery questions without pitching upfront!")
@@ -114,7 +115,7 @@ def main():
                 continue
                 
             print("\n" + "=" * 75)
-            print(f" PANEL RESPONSES (N={len(active_panel)}) — PARALLEL EXECUTION ⚡")
+            print(f" PANEL RESPONSES (N={len(active_panel)}) — DIRECTIONAL VECTOR LOGIT MODEL ⚡")
             print("=" * 75)
             
             from concurrent.futures import ThreadPoolExecutor
@@ -129,15 +130,21 @@ def main():
             with ThreadPoolExecutor(max_workers=len(active_panel)) as executor:
                 results = list(executor.map(process_persona, active_panel))
 
+            valid_responses = []
             for persona, response, err in results:
-                print(f"\n👤 [{persona.name}] — {persona.demographics.occupation}")
+                weight_pct = int(persona.population_weight * 100) if hasattr(persona, 'population_weight') else 20
+                print(f"\n👤 [{persona.name}] — {persona.demographics.occupation} (Population Weight: {weight_pct}%)")
                 if err:
                     print(f"❌ Error interviewing {persona.name}: {err}")
                 else:
+                    valid_responses.append(response)
                     if response.deterministic_rule_triggered:
                         print(f"⚡ {response.deterministic_rule_triggered}")
                         
-                    print(f"   \"{response.response_text}\"")
+                    print(f"   🔹 Majority Stance [{response.majority_percent}% {response.primary_action_direction}]: {response.majority_response}")
+                    print(f"   🔸 Minority Stance [{response.minority_percent}%]: {response.minority_exception}")
+                    print(f"   📉 Persona Normalized Churn/Rejection Rate: {response.churn_or_rejection_percent}%")
+                    print(f"   💬 Persona Summary: \"{response.response_text}\"")
                     
                     if response.primary_objection:
                         print(f"   🚩 Concern: {response.primary_objection}")
@@ -146,10 +153,22 @@ def main():
                         "question": user_input,
                         "persona_name": persona.name,
                         "response_text": response.response_text,
-                        "primary_objection": response.primary_objection
+                        "primary_objection": response.primary_objection,
+                        "majority_percent": response.majority_percent,
+                        "churn_or_rejection_percent": response.churn_or_rejection_percent
                     })
                     
                 print("-" * 75)
+                
+            if valid_responses:
+                total_w = sum(r.population_weight for r in valid_responses)
+                unweighted_avg_churn = sum(r.churn_or_rejection_percent for r in valid_responses) / len(valid_responses)
+                weighted_churn_score = sum(r.population_weight * r.churn_or_rejection_percent for r in valid_responses) / total_w if total_w > 0 else 0
+                
+                print(f"\n📊 POST-STRATIFIED WEIGHTED MARKET ANALYSIS (N={len(valid_responses)}):")
+                print(f"   📉 Unweighted Average Churn/Rejection Rate: {unweighted_avg_churn:.1f}%")
+                print(f"   🎯 Post-Stratified Weighted Churn/Rejection Score (Wi): {weighted_churn_score:.1f}%")
+                print("=" * 75)
                 
         except KeyboardInterrupt:
             print("\nExiting.")

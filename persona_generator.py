@@ -16,6 +16,7 @@ REQUIREMENTS:
 1. Each persona must represent a distinctly different behavioral archetype with high contrast in patience, skepticism, tech literacy, and budget.
 2. Personas must differ significantly on domain-specific traits relevant to "{product_or_domain}".
 3. Provide explicit negative guardrail rules for each persona to prevent flattery or generic answers.
+4. Assign a demographic population weight (population_weight) summing to 1.0 across the panel (e.g., 0.20 each).
 
 OUTPUT FORMAT:
 Return ONLY a valid JSON array of objects matching this exact structure:
@@ -23,6 +24,7 @@ Return ONLY a valid JSON array of objects matching this exact structure:
   {{
     "id": "p_01",
     "name": "Full Name",
+    "population_weight": 0.20,
     "demographics": {{
       "age": 35,
       "occupation": "Job Title",
@@ -57,6 +59,7 @@ Return ONLY a valid JSON array of objects matching this exact structure:
                 Persona(
                     id=item.get("id", f"p_{len(personas)+1}"),
                     name=item.get("name", "Generated Persona"),
+                    population_weight=float(item.get("population_weight", 0.20)),
                     demographics=Demographics(**item["demographics"]),
                     psychographics=Psychographics(**item["psychographics"]),
                     guardrail_rules=item.get("guardrail_rules", [])
@@ -109,6 +112,7 @@ These sub-personas MUST represent distinct micro-archetypes of this interested t
 REQUIREMENTS:
 1. Ground the sub-personas directly in the pain points expressed in the interview transcript.
 2. Provide explicit guardrail rules for each sub-persona to test edge-case workflow failures.
+3. Assign a population weight (population_weight) summing to 1.0 across sub-personas (e.g. 0.20 each).
 
 OUTPUT FORMAT:
 Return ONLY a valid JSON array of objects matching this exact structure:
@@ -116,6 +120,7 @@ Return ONLY a valid JSON array of objects matching this exact structure:
   {{
     "id": "zp_01",
     "name": "Full Name",
+    "population_weight": 0.20,
     "demographics": {{
       "age": 32,
       "occupation": "Sub-Segment Role Title [e.g. Power User]",
@@ -150,6 +155,7 @@ Return ONLY a valid JSON array of objects matching this exact structure:
                 Persona(
                     id=item.get("id", f"zp_{len(personas)+1}"),
                     name=item.get("name", "Zoom Sub-Persona"),
+                    population_weight=float(item.get("population_weight", 0.20)),
                     demographics=Demographics(**item["demographics"]),
                     psychographics=Psychographics(**item["psychographics"]),
                     guardrail_rules=item.get("guardrail_rules", [])
