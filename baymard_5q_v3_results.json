@@ -1,0 +1,862 @@
+[
+  {
+    "id": "Q1",
+    "title": "Unexpected Extra Costs (Shipping/Taxes/Fees)",
+    "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+    "ground_truth": 48.0,
+    "v1_score": 15.0,
+    "v1_error": -33.0,
+    "v3_score": 84.0,
+    "v3_error": 36.0,
+    "persona_breakdown": [
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Sarah Jenkins",
+        "persona_role": "Senior Accountant [The Value Auditor]",
+        "weight": 0.25,
+        "decision_stance": "YES",
+        "v_obj_new": 4.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 4.63,
+        "friction_penalty": 0.83,
+        "delta_v": -4.83,
+        "target_metric_score": 82.4,
+        "friction_breakdown": {
+          "f_eff": 4.63,
+          "h_dom": 5.66,
+          "hurdles": {
+            "switch": 2.25,
+            "recourse": 0.8,
+            "financial": 5.66,
+            "lockin": 0.6,
+            "social": 0.6,
+            "trad": 0.25
+          },
+          "f_net_switch": 2.25,
+          "f_net_financial": 7.55
+        },
+        "response_text": "I will close the tab immediately if a website springs surprise fees, handling charges, or ridiculous shipping costs on me at checkout. Total price transparency is mandatory, and playing hide-and-seek with the final total is a guarantee that you lose my business.",
+        "primary_objection": "Hidden fees and unannounced costs revealed at checkout"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Alex Rivera",
+        "persona_role": "Full-Stack Developer [The Speed Optimizer]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 2.0,
+        "v_obj_sq": 9.0,
+        "raw_switching_friction": 1.0,
+        "effective_friction": 1.82,
+        "friction_penalty": 0.2,
+        "delta_v": -7.2,
+        "target_metric_score": 90.0,
+        "friction_breakdown": {
+          "f_eff": 1.82,
+          "h_dom": 2.14,
+          "hurdles": {
+            "switch": 1.0,
+            "recourse": 0.2,
+            "financial": 2.14,
+            "lockin": 0.2,
+            "social": 0.3,
+            "trad": 0.1
+          },
+          "f_net_switch": 1.0,
+          "f_net_financial": 2.85
+        },
+        "response_text": "I drop that cart the second hidden fees or surprise taxes pop up at the final screen. Wasting my time with deceptive pricing is an instant dealbreaker, and I'll just buy from a competitor with transparent checkout.",
+        "primary_objection": "Hidden fees and deceptive pricing disclosed late in the checkout flow"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "David Miller",
+        "persona_role": "Retired Teacher [The Risk Avoider]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 4.0,
+        "v_obj_sq": 7.5,
+        "raw_switching_friction": 3.0,
+        "effective_friction": 5.36,
+        "friction_penalty": 1.29,
+        "delta_v": -4.79,
+        "target_metric_score": 82.2,
+        "friction_breakdown": {
+          "f_eff": 5.36,
+          "h_dom": 6.47,
+          "hurdles": {
+            "switch": 3.5,
+            "recourse": 1.8,
+            "financial": 6.47,
+            "lockin": 1.0,
+            "social": 1.05,
+            "trad": 0.4
+          },
+          "f_net_switch": 3.5,
+          "f_net_financial": 8.62
+        },
+        "response_text": "I close the browser tab the second surprise fees pop up at the end. If they cannot be upfront about the total price from the start, I simply will not trust them with my credit card.",
+        "primary_objection": "Hidden fees and surprise costs at checkout"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Elena Rostova",
+        "persona_role": "Nurse & Working Mother [The Pragmatic Caregiver]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 4.0,
+        "v_obj_sq": 7.5,
+        "raw_switching_friction": 3.0,
+        "effective_friction": 3.03,
+        "friction_penalty": 0.49,
+        "delta_v": -3.99,
+        "target_metric_score": 78.2,
+        "friction_breakdown": {
+          "f_eff": 3.03,
+          "h_dom": 3.58,
+          "hurdles": {
+            "switch": 2.75,
+            "recourse": 1.0,
+            "financial": 3.58,
+            "lockin": 0.8,
+            "social": 0.75,
+            "trad": 0.25
+          },
+          "f_net_switch": 2.75,
+          "f_net_financial": 4.78
+        },
+        "response_text": "I work twelve-hour shifts at the hospital and don't have time to play games with hidden fees at checkout. If a site springs unexpected shipping costs on me at the very end, I will just close the tab and buy it somewhere else.",
+        "primary_objection": "Hidden fees and unexpected shipping costs revealed only at checkout"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Marcus Chen",
+        "persona_role": "Undergraduate Student [The Budget Streamer]",
+        "weight": 0.15,
+        "decision_stance": "YES",
+        "v_obj_new": 2.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 1.0,
+        "effective_friction": 3.45,
+        "friction_penalty": 0.45,
+        "delta_v": -6.45,
+        "target_metric_score": 88.7,
+        "friction_breakdown": {
+          "f_eff": 3.45,
+          "h_dom": 4.22,
+          "hurdles": {
+            "switch": 1.0,
+            "recourse": 0.4,
+            "financial": 4.22,
+            "lockin": 0.2,
+            "social": 0.45,
+            "trad": 0.1
+          },
+          "f_net_switch": 1.0,
+          "f_net_financial": 5.62
+        },
+        "response_text": "If a site springs a bunch of surprise fees on me right at the very end, I close the tab immediately and go find it somewhere else or just skip it entirely. Hidden costs at checkout are a total dealbreaker when every single dollar of my budget is accounted for.",
+        "primary_objection": "Unexpected fees and hidden costs added at checkout"
+      }
+    ]
+  },
+  {
+    "id": "Q2",
+    "title": "Mandatory Account Creation Friction",
+    "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+    "ground_truth": 25.0,
+    "v1_score": 15.0,
+    "v1_error": -10.0,
+    "v3_score": 86.6,
+    "v3_error": 61.6,
+    "persona_breakdown": [
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Sarah Jenkins",
+        "persona_role": "Senior Accountant [The Value Auditor]",
+        "weight": 0.25,
+        "decision_stance": "YES",
+        "v_obj_new": 5.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 8.0,
+        "effective_friction": 6.87,
+        "friction_penalty": 1.24,
+        "delta_v": -4.24,
+        "target_metric_score": 79.5,
+        "friction_breakdown": {
+          "f_eff": 6.87,
+          "h_dom": 8.25,
+          "hurdles": {
+            "switch": 8.25,
+            "recourse": 0.8,
+            "financial": 5.66,
+            "lockin": 0.6,
+            "social": 0.6,
+            "trad": 0.25
+          },
+          "f_net_switch": 8.25,
+          "f_net_financial": 7.55
+        },
+        "response_text": "I will drop a shopping cart in a heartbeat if a site tries to force me into making an account just to buy something. I don't need another username and password to track, and it's a dead giveaway that they're going to spam my inbox or hide fees later.",
+        "primary_objection": "Unnecessary account creation friction and forced data collection"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Alex Rivera",
+        "persona_role": "Full-Stack Developer [The Speed Optimizer]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 2.0,
+        "v_obj_sq": 9.0,
+        "raw_switching_friction": 8.0,
+        "effective_friction": 5.78,
+        "friction_penalty": 0.64,
+        "delta_v": -7.64,
+        "target_metric_score": 90.0,
+        "friction_breakdown": {
+          "f_eff": 5.78,
+          "h_dom": 7.0,
+          "hurdles": {
+            "switch": 7.0,
+            "recourse": 0.2,
+            "financial": 2.14,
+            "lockin": 0.2,
+            "social": 0.3,
+            "trad": 0.1
+          },
+          "f_net_switch": 7.0,
+          "f_net_financial": 2.85
+        },
+        "response_text": "Forcing me through a mandatory account creation wall with a password requirement is an instant cart abandonment. Apple Pay and autofill exist so I don't have to waste time filling out redundant forms.",
+        "primary_objection": "Mandatory account creation and friction during checkout"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "David Miller",
+        "persona_role": "Retired Teacher [The Risk Avoider]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 2.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 8.0,
+        "effective_friction": 7.15,
+        "friction_penalty": 1.72,
+        "delta_v": -7.72,
+        "target_metric_score": 90.0,
+        "friction_breakdown": {
+          "f_eff": 7.15,
+          "h_dom": 8.5,
+          "hurdles": {
+            "switch": 8.5,
+            "recourse": 1.8,
+            "financial": 6.47,
+            "lockin": 1.0,
+            "social": 1.05,
+            "trad": 0.4
+          },
+          "f_net_switch": 8.5,
+          "f_net_financial": 8.62
+        },
+        "response_text": "Yes, I will leave the site immediately if they force me to make an account just to buy something. I do not want yet another password to remember or my email spam-filled with marketing garbage.",
+        "primary_objection": "Unnecessary accounts and potential spam risks"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Elena Rostova",
+        "persona_role": "Nurse & Working Mother [The Pragmatic Caregiver]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 3.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 5.0,
+        "effective_friction": 4.0,
+        "friction_penalty": 0.64,
+        "delta_v": -5.64,
+        "target_metric_score": 85.9,
+        "friction_breakdown": {
+          "f_eff": 4.0,
+          "h_dom": 4.75,
+          "hurdles": {
+            "switch": 4.75,
+            "recourse": 1.0,
+            "financial": 3.58,
+            "lockin": 0.8,
+            "social": 0.75,
+            "trad": 0.25
+          },
+          "f_net_switch": 4.75,
+          "f_net_financial": 4.78
+        },
+        "response_text": "I get off a twelve-hour nursing shift and do not have the patience to create random passwords just to buy a pair of kids' shoes. If guest checkout isn't an option, I'll close the tab and buy it somewhere else that doesn't waste my time.",
+        "primary_objection": "Mandatory account creation wasting time during checkout"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Marcus Chen",
+        "persona_role": "Undergraduate Student [The Budget Streamer]",
+        "weight": 0.15,
+        "decision_stance": "YES",
+        "v_obj_new": 2.0,
+        "v_obj_sq": 9.0,
+        "raw_switching_friction": 8.0,
+        "effective_friction": 6.17,
+        "friction_penalty": 0.8,
+        "delta_v": -7.8,
+        "target_metric_score": 90.0,
+        "friction_breakdown": {
+          "f_eff": 6.17,
+          "h_dom": 7.0,
+          "hurdles": {
+            "switch": 7.0,
+            "recourse": 0.4,
+            "financial": 4.22,
+            "lockin": 0.2,
+            "social": 0.45,
+            "trad": 0.1
+          },
+          "f_net_switch": 7.0,
+          "f_net_financial": 5.62
+        },
+        "response_text": "Yeah, I'm dropping the cart immediately if a site forces me to make an account just to buy something. There's zero reason for that friction when guest checkout exists, and I'm not handing over my data and getting spam for a one-time purchase.",
+        "primary_objection": "Forced account creation and unnecessary data harvesting for checkout"
+      }
+    ]
+  },
+  {
+    "id": "Q3",
+    "title": "Slow / Unclear Delivery Speeds",
+    "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+    "ground_truth": 23.0,
+    "v1_score": 18.5,
+    "v1_error": -4.5,
+    "v3_score": 76.9,
+    "v3_error": 53.9,
+    "persona_breakdown": [
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Sarah Jenkins",
+        "persona_role": "Senior Accountant [The Value Auditor]",
+        "weight": 0.25,
+        "decision_stance": "YES",
+        "v_obj_new": 4.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 4.63,
+        "friction_penalty": 0.83,
+        "delta_v": -4.83,
+        "target_metric_score": 82.4,
+        "friction_breakdown": {
+          "f_eff": 4.63,
+          "h_dom": 5.66,
+          "hurdles": {
+            "switch": 2.25,
+            "recourse": 0.8,
+            "financial": 5.66,
+            "lockin": 0.6,
+            "social": 0.6,
+            "trad": 0.25
+          },
+          "f_net_switch": 2.25,
+          "f_net_financial": 7.55
+        },
+        "response_text": "If a site hides shipping times or takes too long, I immediately close the tab and buy from somewhere transparent. I refuse to play guessing games with my deliveries or pay inflated shipping fees at the very last step.",
+        "primary_objection": "Lack of transparent delivery terms and hidden fulfillment delays before checkout"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Alex Rivera",
+        "persona_role": "Full-Stack Developer [The Speed Optimizer]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 9.0,
+        "v_obj_sq": 8.5,
+        "raw_switching_friction": 1.0,
+        "effective_friction": 1.82,
+        "friction_penalty": 0.2,
+        "delta_v": 0.3,
+        "target_metric_score": 52.4,
+        "friction_breakdown": {
+          "f_eff": 1.82,
+          "h_dom": 2.14,
+          "hurdles": {
+            "switch": 1.0,
+            "recourse": 0.2,
+            "financial": 2.14,
+            "lockin": 0.2,
+            "social": 0.3,
+            "trad": 0.1
+          },
+          "f_net_switch": 1.0,
+          "f_net_financial": 2.85
+        },
+        "response_text": "If a site hides shipping times or takes more than a couple of days without an expedited option, I'm out. I hate guessing when a package will arrive, and there's always a competitor who can get it to me faster with transparent tracking.",
+        "primary_objection": "Lack of delivery transparency and slow shipping speeds"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "David Miller",
+        "persona_role": "Retired Teacher [The Risk Avoider]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 3.0,
+        "v_obj_sq": 7.0,
+        "raw_switching_friction": 5.0,
+        "effective_friction": 5.51,
+        "friction_penalty": 1.32,
+        "delta_v": -5.32,
+        "target_metric_score": 84.6,
+        "friction_breakdown": {
+          "f_eff": 5.51,
+          "h_dom": 6.47,
+          "hurdles": {
+            "switch": 5.5,
+            "recourse": 1.8,
+            "financial": 6.47,
+            "lockin": 1.0,
+            "social": 1.05,
+            "trad": 0.4
+          },
+          "f_net_switch": 5.5,
+          "f_net_financial": 8.62
+        },
+        "response_text": "If a website hides when the package will actually arrive or takes too many weeks, I simply close the browser and don't buy. I refuse to give my credit card number to a business that cannot clearly state basic delivery terms upfront.",
+        "primary_objection": "Hidden delivery times and lack of clear fulfillment details before payment."
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Elena Rostova",
+        "persona_role": "Nurse & Working Mother [The Pragmatic Caregiver]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 4.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 3.0,
+        "effective_friction": 3.03,
+        "friction_penalty": 0.49,
+        "delta_v": -4.49,
+        "target_metric_score": 80.8,
+        "friction_breakdown": {
+          "f_eff": 3.03,
+          "h_dom": 3.58,
+          "hurdles": {
+            "switch": 2.75,
+            "recourse": 1.0,
+            "financial": 3.58,
+            "lockin": 0.8,
+            "social": 0.75,
+            "trad": 0.25
+          },
+          "f_net_switch": 2.75,
+          "f_net_financial": 4.78
+        },
+        "response_text": "Working 12-hour shifts means I don't have time to chase down packages that might show up whenever. If a site hides shipping times or takes over a week, I will just close the tab and buy it somewhere else that actually tells me when it arrives.",
+        "primary_objection": "Lack of transparent delivery timelines and slow shipping speeds"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Marcus Chen",
+        "persona_role": "Undergraduate Student [The Budget Streamer]",
+        "weight": 0.15,
+        "decision_stance": "YES",
+        "v_obj_new": 3.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 3.45,
+        "friction_penalty": 0.45,
+        "delta_v": -5.45,
+        "target_metric_score": 85.1,
+        "friction_breakdown": {
+          "f_eff": 3.45,
+          "h_dom": 4.22,
+          "hurdles": {
+            "switch": 1.0,
+            "recourse": 0.4,
+            "financial": 4.22,
+            "lockin": 0.2,
+            "social": 0.45,
+            "trad": 0.1
+          },
+          "f_net_switch": 1.0,
+          "f_net_financial": 5.62
+        },
+        "response_text": "If a site hides shipping times until right before I pay or tries to make me wait two weeks, I'm just closing the tab and finding it elsewhere. There's zero reason to deal with sketchy logistics when I can usually find the exact same thing on a site that's actually transparent.",
+        "primary_objection": "Hidden delivery times and slow shipping speeds"
+      }
+    ]
+  },
+  {
+    "id": "Q4",
+    "title": "Customer Reviews & Star Ratings Reliance",
+    "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+    "ground_truth": 75.0,
+    "v1_score": 80.0,
+    "v1_error": 5.0,
+    "v3_score": 52.3,
+    "v3_error": -22.7,
+    "persona_breakdown": [
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Sarah Jenkins",
+        "persona_role": "Senior Accountant [The Value Auditor]",
+        "weight": 0.25,
+        "decision_stance": "YES",
+        "v_obj_new": 7.0,
+        "v_obj_sq": 5.0,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 4.63,
+        "friction_penalty": 0.83,
+        "delta_v": 1.17,
+        "target_metric_score": 59.2,
+        "friction_breakdown": {
+          "f_eff": 4.63,
+          "h_dom": 5.66,
+          "hurdles": {
+            "switch": 2.25,
+            "recourse": 0.8,
+            "financial": 5.66,
+            "lockin": 0.6,
+            "social": 0.6,
+            "trad": 0.25
+          },
+          "f_net_switch": 2.25,
+          "f_net_financial": 7.55
+        },
+        "response_text": "I always check reviews to see if a product actually works as advertised and to watch out for hidden quality issues. If the rating drops below four stars or looks padded with fake feedback, I skip it entirely.",
+        "primary_objection": "Unreliable reviews and low product quality"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Alex Rivera",
+        "persona_role": "Full-Stack Developer [The Speed Optimizer]",
+        "weight": 0.2,
+        "decision_stance": "NO",
+        "v_obj_new": 6.5,
+        "v_obj_sq": 5.5,
+        "raw_switching_friction": 3.0,
+        "effective_friction": 2.09,
+        "friction_penalty": 0.23,
+        "delta_v": 0.77,
+        "target_metric_score": 43.9,
+        "friction_breakdown": {
+          "f_eff": 2.09,
+          "h_dom": 2.14,
+          "hurdles": {
+            "switch": 2.0,
+            "recourse": 0.2,
+            "financial": 2.14,
+            "lockin": 0.2,
+            "social": 0.3,
+            "trad": 0.1
+          },
+          "f_net_switch": 2.0,
+          "f_net_financial": 2.85
+        },
+        "response_text": "I don't actively check customer reviews before buying because I prioritize speed and a minimalist checkout experience. Reading detailed reviews adds unnecessary steps that slow down my purchase flow.",
+        "primary_objection": "Adding review-checking steps conflicts with my core value of fast, frictionless shopping"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "David Miller",
+        "persona_role": "Retired Teacher [The Risk Avoider]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 7.0,
+        "v_obj_sq": 5.0,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 5.31,
+        "friction_penalty": 1.27,
+        "delta_v": 0.73,
+        "target_metric_score": 55.8,
+        "friction_breakdown": {
+          "f_eff": 5.31,
+          "h_dom": 6.47,
+          "hurdles": {
+            "switch": 2.5,
+            "recourse": 1.8,
+            "financial": 6.47,
+            "lockin": 1.0,
+            "social": 1.05,
+            "trad": 0.4
+          },
+          "f_net_switch": 2.5,
+          "f_net_financial": 8.62
+        },
+        "response_text": "I always check the star ratings and read a few reviews first because I refuse to get scammed by cheap junk online. If other folks from my generation say it actually works and isn't a total headache, then I might consider it.",
+        "primary_objection": "Fear of online fraud and poor-quality products that are difficult to return."
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Elena Rostova",
+        "persona_role": "Nurse & Working Mother [The Pragmatic Caregiver]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 8.0,
+        "v_obj_sq": 7.5,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 2.97,
+        "friction_penalty": 0.47,
+        "delta_v": 0.03,
+        "target_metric_score": 50.2,
+        "friction_breakdown": {
+          "f_eff": 2.97,
+          "h_dom": 3.58,
+          "hurdles": {
+            "switch": 1.75,
+            "recourse": 1.0,
+            "financial": 3.58,
+            "lockin": 0.8,
+            "social": 0.75,
+            "trad": 0.25
+          },
+          "f_net_switch": 1.75,
+          "f_net_financial": 4.78
+        },
+        "response_text": "I always glance at the star ratings and recent reviews before buying anything, especially if it's for the kids or household use. I don't have time to deal with cheap junk that falls apart after two weeks, so I rely on other moms to tell me if it actually holds up.",
+        "primary_objection": "Wasting money on low-quality products that break quickly"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Marcus Chen",
+        "persona_role": "Undergraduate Student [The Budget Streamer]",
+        "weight": 0.15,
+        "decision_stance": "YES",
+        "v_obj_new": 8.0,
+        "v_obj_sq": 7.5,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 3.45,
+        "friction_penalty": 0.45,
+        "delta_v": 0.05,
+        "target_metric_score": 50.4,
+        "friction_breakdown": {
+          "f_eff": 3.45,
+          "h_dom": 4.22,
+          "hurdles": {
+            "switch": 1.0,
+            "recourse": 0.4,
+            "financial": 4.22,
+            "lockin": 0.2,
+            "social": 0.45,
+            "trad": 0.1
+          },
+          "f_net_switch": 1.0,
+          "f_net_financial": 5.62
+        },
+        "response_text": "Yeah, I always check the reviews first, especially the 2 and 3-star ones to see what actually breaks or sucks about the product. When you're on a tight college budget, you can't afford to waste cash on junk that falls apart in a week.",
+        "primary_objection": "Fake positive reviews and hidden product flaws"
+      }
+    ]
+  },
+  {
+    "id": "Q5",
+    "title": "Strict / Friction Return Policy",
+    "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+    "ground_truth": 18.0,
+    "v1_score": 15.0,
+    "v1_error": -3.0,
+    "v3_score": 77.6,
+    "v3_error": 59.6,
+    "persona_breakdown": [
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Sarah Jenkins",
+        "persona_role": "Senior Accountant [The Value Auditor]",
+        "weight": 0.25,
+        "decision_stance": "YES",
+        "v_obj_new": 5.0,
+        "v_obj_sq": 7.5,
+        "raw_switching_friction": 3.0,
+        "effective_friction": 4.68,
+        "friction_penalty": 0.84,
+        "delta_v": -3.34,
+        "target_metric_score": 74.4,
+        "friction_breakdown": {
+          "f_eff": 4.68,
+          "h_dom": 5.66,
+          "hurdles": {
+            "switch": 3.25,
+            "recourse": 0.8,
+            "financial": 5.66,
+            "lockin": 0.6,
+            "social": 0.6,
+            "trad": 0.25
+          },
+          "f_net_switch": 3.25,
+          "f_net_financial": 7.55
+        },
+        "response_text": "I will drop an online order in a heartbeat if they stick me with return shipping costs or give me less than two weeks to return something. Hiding behind restrictive return policies just signals to me that the product is cheap and they expect it to fail.",
+        "primary_objection": "Unreasonable return fees and short return windows"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Alex Rivera",
+        "persona_role": "Full-Stack Developer [The Speed Optimizer]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 4.0,
+        "v_obj_sq": 8.0,
+        "raw_switching_friction": 2.0,
+        "effective_friction": 1.82,
+        "friction_penalty": 0.2,
+        "delta_v": -4.2,
+        "target_metric_score": 79.3,
+        "friction_breakdown": {
+          "f_eff": 1.82,
+          "h_dom": 2.14,
+          "hurdles": {
+            "switch": 1.0,
+            "recourse": 0.2,
+            "financial": 2.14,
+            "lockin": 0.2,
+            "social": 0.3,
+            "trad": 0.1
+          },
+          "f_net_switch": 1.0,
+          "f_net_financial": 2.85
+        },
+        "response_text": "If a site makes me pay for return shipping or slaps on a ridiculous sub-two-week return window, I'm closing the tab immediately. There are too many frictionless e-commerce options out there to deal with outdated, anti-consumer policies.",
+        "primary_objection": "Punitive return policies and paying for return shipping"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "David Miller",
+        "persona_role": "Retired Teacher [The Risk Avoider]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 3.0,
+        "v_obj_sq": 7.0,
+        "raw_switching_friction": 6.0,
+        "effective_friction": 5.62,
+        "friction_penalty": 1.35,
+        "delta_v": -5.35,
+        "target_metric_score": 84.7,
+        "friction_breakdown": {
+          "f_eff": 5.62,
+          "h_dom": 6.5,
+          "hurdles": {
+            "switch": 6.5,
+            "recourse": 1.8,
+            "financial": 6.47,
+            "lockin": 1.0,
+            "social": 1.05,
+            "trad": 0.4
+          },
+          "f_net_switch": 6.5,
+          "f_net_financial": 8.62
+        },
+        "response_text": "If a company won't stand behind what they sell with a fair return window and free shipping back, I'm simply not buying from them. At my age, I don't have the patience to argue over restocking fees or get stuck with something that doesn't fit right.",
+        "primary_objection": "Unfair return policies and paying for return shipping"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Elena Rostova",
+        "persona_role": "Nurse & Working Mother [The Pragmatic Caregiver]",
+        "weight": 0.2,
+        "decision_stance": "YES",
+        "v_obj_new": 5.0,
+        "v_obj_sq": 7.5,
+        "raw_switching_friction": 3.0,
+        "effective_friction": 3.03,
+        "friction_penalty": 0.49,
+        "delta_v": -2.99,
+        "target_metric_score": 72.2,
+        "friction_breakdown": {
+          "f_eff": 3.03,
+          "h_dom": 3.58,
+          "hurdles": {
+            "switch": 2.75,
+            "recourse": 1.0,
+            "financial": 3.58,
+            "lockin": 0.8,
+            "social": 0.75,
+            "trad": 0.25
+          },
+          "f_net_switch": 2.75,
+          "f_net_financial": 4.78
+        },
+        "response_text": "Working twelve-hour shifts means I barely have time to open packages, let alone scramble to return something in under two weeks while paying out of pocket for shipping. If a site doesn't make returns easy and free, I'm closing the tab and buying from somewhere else that actually respects my time.",
+        "primary_objection": "Strict return windows and return shipping fees"
+      },
+      {
+        "engine_version": "V3 (Mental Accounting Thaler-Train)",
+        "category": "DIGITAL_SUBSCRIPTIONS_AND_COMMERCE",
+        "category_display": "Digital Entertainment, Subscriptions & E-Commerce",
+        "persona_name": "Marcus Chen",
+        "persona_role": "Undergraduate Student [The Budget Streamer]",
+        "weight": 0.15,
+        "decision_stance": "YES",
+        "v_obj_new": 4.0,
+        "v_obj_sq": 7.5,
+        "raw_switching_friction": 3.0,
+        "effective_friction": 3.6,
+        "friction_penalty": 0.47,
+        "delta_v": -3.97,
+        "target_metric_score": 78.1,
+        "friction_breakdown": {
+          "f_eff": 3.6,
+          "h_dom": 4.22,
+          "hurdles": {
+            "switch": 2.0,
+            "recourse": 0.4,
+            "financial": 4.22,
+            "lockin": 0.2,
+            "social": 0.45,
+            "trad": 0.1
+          },
+          "f_net_switch": 2.0,
+          "f_net_financial": 5.62
+        },
+        "response_text": "Yeah, absolutely. If a site is going to charge me for return shipping or give me less than two weeks to send something back, I'll just close the tab and buy it somewhere else like Amazon with free returns.",
+        "primary_objection": "Paying return shipping and unreasonably short return windows."
+      }
+    ]
+  }
+]
