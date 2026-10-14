@@ -84,8 +84,8 @@ System 1 Habit Strength: {persona.psychographics.system_1_habit_strength}/10 (De
 5. MCFADDEN LOGIT PROBABILISTIC SPLIT & DIRECTIONAL VECTOR:
    - majority_percent (e.g. 85): The percentage of users in your persona archetype taking the primary action.
    - minority_percent (e.g. 15): The percentage taking the secondary conditional exception (MUST sum with majority_percent to 100).
-   - primary_action_direction: Specify dominant stance as "CANCEL", "REJECT", "CHURN", "KEEP", "ACCEPT", or "ADOPT".
-   - churn_or_rejection_percent: Normalized 0-100% probability of Cancellation / Rejection / Churn (e.g. If 85% KEEP, then churn_or_rejection_percent is 15. If 85% CANCEL, then churn_or_rejection_percent is 85).
+   - primary_action_direction: Specify dominant stance strictly as either "ADOPT_INNOVATION" (accepting/using the new product/service) or "RETAIN_STATUS_QUO" (sticking with existing habits, offline methods, or rejecting the new product).
+   - churn_or_rejection_percent: Normalized 0-100% probability of rejecting the innovation / retaining status quo (e.g., If 85% RETAIN_STATUS_QUO, churn_or_rejection_percent is 85. If 85% ADOPT_INNOVATION, churn_or_rejection_percent is 15).
    - For Open-Ended Workflow questions ("How do you navigate X?"): Group real-world methods into 2 PRIMARY MACRO WORKAROUND BUCKETS.
 
 OUTPUT FORMAT:
@@ -93,7 +93,7 @@ Reply ONLY with a valid JSON object matching this exact structure:
 {{
   "majority_percent": 85,
   "minority_percent": 15,
-  "primary_action_direction": "CANCEL",
+  "primary_action_direction": "RETAIN_STATUS_QUO",
   "churn_or_rejection_percent": 85,
   "majority_response": "Dominant action or macro workaround method representing the majority split (1-2 sentences)",
   "minority_exception": "Conditional exception or secondary macro workaround method representing the minority split (1-2 sentences)",

@@ -11,10 +11,6 @@ def load_env_key() -> str:
     """
     Loads API key from environment variable or local .env file.
     """
-    key = os.environ.get("OPENROUTER_API_KEY") or os.environ.get("GEMINI_API_KEY")
-    if key:
-        return key.strip().strip("'").strip('"')
-    
     env_path = os.path.join(os.path.dirname(__file__), ".env")
     if os.path.exists(env_path):
         with open(env_path, "r", encoding="utf-8") as f:
@@ -26,8 +22,8 @@ def load_env_key() -> str:
                     val_str = v.strip().strip("'").strip('"')
                     if k_str in ["OPENROUTER_API_KEY", "GEMINI_API_KEY"]:
                         os.environ[k_str] = val_str
-                        return val_str
-    return ""
+                        
+    return os.environ.get("GEMINI_API_KEY") or os.environ.get("OPENROUTER_API_KEY", "")
 
 def clean_json_response(raw_text: str) -> Dict[str, Any]:
     """
@@ -130,7 +126,7 @@ def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_
     Fallback Gemini REST API endpoint call.
     """
     api_key = api_key.strip().strip("'").strip('"')
-    candidate_models = ["gemini-2.5-flash", "gemini-3.6-flash", "gemini-3.5-flash"]
+    candidate_models = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-3.6-flash"]
     if model_name:
         candidate_models.insert(0, model_name)
         
@@ -145,7 +141,7 @@ def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_
         headers = {"Content-Type": "application/json"}
         data = json.dumps(payload).encode("utf-8")
         
-        for attempt in range(3):
+        for attempt in range(4):
             req = urllib.request.Request(url, data=data, headers=headers, method="POST")
             try:
                 with urllib.request.urlopen(req, timeout=12) as resp:
@@ -156,21 +152,40 @@ def call_gemini_api(api_key: str, system_prompt: str, user_question: str, model_
                         raise ValueError("Gemini returned no response candidates.")
                     text_content = candidates[0]["content"]["parts"][0]["text"]
                     return clean_json_response(text_content)
+            except urllib.error.HTTPError as e:
+                error_body = e.read().decode("utf-8") if hasattr(e, "read") else ""
+                last_error = f"Gemini API Error ({e.code}) on model '{model}': {error_body}"
+                if e.code in (429, 502, 503, 504):
+                    if attempt < 3:
+                        time.sleep(2.5 * (attempt + 1))
+                        continue
+                break
             except Exception as e:
                 last_error = str(e)
-                time.sleep(1)
+                if attempt < 3:
+                    time.sleep(1.5)
+                    continue
                 break
     raise RuntimeError(f"All Gemini API attempts failed: {last_error}")
 
 def call_llm_api(api_key: str, system_prompt: str, user_question: str, model_name: str = None) -> Dict[str, Any]:
     """
-    Routes to OpenRouter or Gemini API based on key format.
+    Routes to Gemini API as primary fast engine, with OpenRouter as secondary fallback.
     """
-    if not api_key:
-        api_key = load_env_key()
+    load_env_key()
     
-    if api_key.startswith("sk-or-"):
-        return call_openrouter_api(api_key, system_prompt, user_question, model_name=model_name)
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    openrouter_key = os.environ.get("OPENROUTER_API_KEY") or (api_key if api_key and api_key.startswith("sk-or-") else "")
+
+    if gemini_key:
+        try:
+            return call_gemini_api(gemini_key, system_prompt, user_question, model_name=model_name)
+        except Exception as e:
+            if openrouter_key:
+                return call_openrouter_api(openrouter_key, system_prompt, user_question, model_name=model_name)
+            raise e
+    elif openrouter_key:
+        return call_openrouter_api(openrouter_key, system_prompt, user_question, model_name=model_name)
     else:
         return call_gemini_api(api_key, system_prompt, user_question, model_name=model_name)
 
@@ -204,7 +219,8 @@ def interview_persona_stateless(persona: Persona, question_text: str, api_key: s
             churn_pct = None
 
     if churn_pct is None:
-        if any(k in action_dir for k in ["KEEP", "ACCEPT", "ADOPT", "RETAIN", "STAY"]):
+        is_adopt = any(k in action_dir for k in ["ADOPT", "ACCEPT", "BUY", "YES", "PROCEED", "AGREE"]) and not any(k in action_dir for k in ["STATUS_QUO", "REJECT", "CANCEL", "CHURN"])
+        if is_adopt:
             churn_pct = 100 - maj_pct
         else:
             churn_pct = maj_pct
