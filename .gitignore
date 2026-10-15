@@ -7,8 +7,22 @@
 api_key*
 secrets*
 
+# Node & Next.js builds
+web/node_modules/
+node_modules/
+web/.next/
+.next/
+web/out/
+out/
+.turbo/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Python cache & virtual environments
 __pycache__/
+*/__pycache__/
+*/*/__pycache__/
 *.py[cod]
 *$py.class
 .venv/
@@ -16,7 +30,16 @@ venv/
 ENV/
 env/
 
-# IDE & System files
+# Benchmark execution output dumps
+*_results.json
+*.jsonl
+
+# System & temporary logs
+*.log
+activity.log
+tempmediaStorage/
+
+# IDE & OS files
 .vscode/
 .idea/
 .DS_Store
